@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>REST API</title>
+	<script src="front.js"></script>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div id="examId"> </div>
+	<div class="containerForm">
+		<form method="post" id="collectDataForm" onsubmit="return updateExam(event)">
+
+    		<label for="subject_edit">Subject</label>
+    		<input type="text" id="subject_edit" name="subject_edit">
+        <br/>
+    		<label for="group_edit">Group</label>
+    		<input type="text" id="group_edit" name="group_edit">
+        <br/>
+    		<label for="date_edit">Date</label>
+    		<input type="date" id="date_edit" name="date_edit">
+        <br/>
+		<label for="time_edit">Time:</label>
+		<input type="time" id="time_edit" name="time_edit">
+	<br/>
+		<label for="comments_edit">Comments</label>
+    		<input type="text" id="comments_edit" name="comments_edit">
+	<br/>
+    		<button>Save</button>
+  		</form>
+	</div>
+
+  <br/>
+	<div class="container_controllers">
+		<button onclick="return deleteItem()">Delete</button>
+	</div>
+
+</body>
+</html>
