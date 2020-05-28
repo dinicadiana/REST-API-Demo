@@ -103,11 +103,11 @@ function populatePage(exam) {
 	console.log(exam);
 
 	document.getElementById("examId").innerHTML = exam.data.id;
-	document.getElementById("subject").placeholder = exam.data.subject;
-	document.getElementById("comments").placeholder = exam.data.comments;
-	document.getElementById("group").placeholder = exam.data.group;
-	document.getElementById("date").placeholder = exam.data.date;
-	document.getElementById("time").placeholder = exam.data.time;
+	document.getElementById("subject_edit").placeholder = exam.data.subject;
+	document.getElementById("comments_edit").placeholder = exam.data.comments;
+	document.getElementById("group_edit").placeholder = exam.data.group;
+	document.getElementById("date_edit").placeholder = exam.data.date;
+	document.getElementById("time_edit").placeholder = exam.data.time;
 }
 
 function populateTable(exams) {
@@ -154,5 +154,45 @@ function deleteItem() {
   		}
 	});
 	
+	return false;
+}
+
+function updateExam(event) {
+	event.preventDefault();
+
+	// in this object we keep the data that will be sent to backend
+	let data = {};
+
+	let examId = document.getElementById("examId").innerHTML;
+	// get values from formular
+	data['subject'] = document.getElementById("subject_edit").value;
+	data['group'] = document.getElementById("group_edit").value;
+	data['date'] = document.getElementById("date_edit").value;
+	data['time'] = document.getElementById("time_edit").value;
+	data['comments'] = document.getElementById("comments_edit").value;
+
+	console.log(JSON.stringify(data));
+
+	let fullAPIPath = BaseAPIPath + ContactAPIPath + "/" + examId.toString();
+	let httpPromise = fetch(fullAPIPath, {
+		method: 'PUT',
+		body: JSON.stringify(data),
+		headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		}
+	});
+
+	httpPromise.then(function(response) {
+    	// log the response from backend for debugging
+		console.log(response);
+  		// show a simple alert
+  		if (response.ok) {
+  			// the status code is 200
+  			alert("Exam successfully modified!");
+  		} else {
+  			alert("Error: couldn't modify exam.");
+		}
+	});
 	return false;
 }
