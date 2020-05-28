@@ -72,7 +72,7 @@ function getItems () {
 function selectRow(row) {
 	return function() {
 
-		let fullAPIPath = BaseAPIPath + ContactAPIPath + (row.rowIndex).toString();
+		let fullAPIPath = BaseAPIPath + ContactAPIPath + "/" + (row.rowIndex).toString();
 		let httpPromise = fetch(fullAPIPath, {
 			method: 'GET',
 			headers: {
@@ -86,7 +86,7 @@ function selectRow(row) {
 			console.log(response);
 
 			// handle the response from backend
-			response.json().then(data => { populateTable(data); });
+			response.json().then(data => { populatePage(data); });
 			if (response.ok) {
 				// the status code is 200
 				alert("Exam selected!");
@@ -97,6 +97,17 @@ function selectRow(row) {
 
 		return false;
 	};
+}
+
+function populatePage(exam) {
+	console.log(exam);
+
+	document.getElementById("examId").innerHTML = exam[i].data.id;
+	document.getElementById("subject").placeholder = exam.data.subject;
+	document.getElementById("comments").placeholder = exam.data.comments;
+	document.getElementById("group").placeholder = exam.data.group;
+	document.getElementById("date").placeholder = exam.data.date;
+	document.getElementById("time").placeholder = exam.data.time;
 }
 
 function populateTable(exams) {
@@ -123,5 +134,25 @@ function populateTable(exams) {
 }
 
 function deleteItem() {
+	let examId = document.getElementById("examId").innerHTML;
+	let fullAPIPath = BaseAPIPath + ContactAPIPath + examId.toString();
+	let httpPromise = fetch(fullAPIPath, {
+		method: 'DELETE'
+	});
+
+	httpPromise.then(function(response) {
+		// log the response from backend for debugging
+		console.log(response);
+
+		// handle the response from backend
+		response.json().then(data => { populateTable(data); });
+		if (response.ok) {
+  			// the status code is 200
+  			alert("Exams successfully read!");
+  		} else {
+  			alert("Error: couldn't get exams.");
+  		}
+	});
+	
 	return false;
 }
