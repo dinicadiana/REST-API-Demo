@@ -102,7 +102,7 @@ function selectRow(row) {
 function populatePage(exam) {
 	console.log(exam);
 
-	document.getElementById("examId").innerHTML = exam[i].data.id;
+	document.getElementById("examId").innerHTML = exam.data.id;
 	document.getElementById("subject").placeholder = exam.data.subject;
 	document.getElementById("comments").placeholder = exam.data.comments;
 	document.getElementById("group").placeholder = exam.data.group;
