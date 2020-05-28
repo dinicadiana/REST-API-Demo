@@ -52,8 +52,6 @@ function getItems () {
 		}
 	});
 
-	populateTable(0);
-
 	httpPromise.then(function(response) {
 		// log the response from backend for debugging
 		console.log(response);
@@ -89,6 +87,6 @@ function populateTable(exams) {
 		item2.innerHTML = exams[i].data.group;
 		item3.innerHTML = exams[i].data.date;
 		item4.innerHTML = exams[i].data.time;
-		item5.innerHTML = exams[i].comments;
+		item5.innerHTML = exams[i].data.comments;
 	}
 }
