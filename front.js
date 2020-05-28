@@ -65,8 +65,38 @@ function getItems () {
   			alert("Error: couldn't get exams.");
   		}
 	});
-
+	
 	return false;
+}
+
+function selectRow(row) {
+	return function() {
+
+		let fullAPIPath = BaseAPIPath + ContactAPIPath + (row.rowIndex).toString();
+		let httpPromise = fetch(fullAPIPath, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json'
+			}
+		});
+
+		httpPromise.then(function(response) {
+			// log the response from backend for debugging
+			console.log(response);
+
+			// handle the response from backend
+			response.json().then(data => { populateTable(data); });
+			if (response.ok) {
+				// the status code is 200
+				alert("Exam selected!");
+			} else {
+				alert("Error: couldn't select exam.");
+			}
+		});
+
+		return false;
+	};
 }
 
 function populateTable(exams) {
@@ -77,6 +107,7 @@ function populateTable(exams) {
 	for (let i=0; i < exams.length; i++) {
 		
 		let newRow = itemsTable.insertRow(i+1);
+		newRow.onclick = selectRow(newRow);
 		let item1 = newRow.insertCell(0);
 		let item2 = newRow.insertCell(1);
 		let item3 = newRow.insertCell(2);
@@ -89,4 +120,8 @@ function populateTable(exams) {
 		item4.innerHTML = exams[i].data.time;
 		item5.innerHTML = exams[i].data.comments;
 	}
+}
+
+function deleteItem() {
+	return false;
 }
