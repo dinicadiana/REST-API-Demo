@@ -125,11 +125,11 @@ function populateTable(exams) {
 		let item4 = newRow.insertCell(3);
 		let item5 = newRow.insertCell(4);
 
-		item1.innerHTML = exams[i].data.subject;
-		item2.innerHTML = exams[i].data.group;
-		item3.innerHTML = exams[i].data.date;
-		item4.innerHTML = exams[i].data.time;
-		item5.innerHTML = exams[i].data.comments;
+		item1.innerHTML = exams[i].subject;
+		item2.innerHTML = exams[i].group;
+		item3.innerHTML = exams[i].date;
+		item4.innerHTML = exams[i].time;
+		item5.innerHTML = exams[i].comments;
 	}
 }
 
