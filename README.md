@@ -3,7 +3,7 @@
 Backend: javascript
 Frontend: HTML/CSS
 
-	Aceasta aplicatie foloseste cele patru tipuri de request-uri
+        Aceasta aplicatie foloseste cele patru tipuri de request-uri
 pentru a simula un calendar cu examenele studentilor de la CTI.
 	Astfel, un student poate sa introduca un examen, completand
 campurile puse la dispozitie (care reprezinta informatiile necesare)
