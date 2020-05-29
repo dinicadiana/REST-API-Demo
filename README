@@ -1,7 +1,7 @@
 # REST-API-Demo
 
-Backend: javascript
-Frontend: HTML/CSS
+Backend: javascript (node.js)
+Frontend: HTML/CSS/javascript
 
         Aceasta aplicatie foloseste cele patru tipuri de request-uri
 pentru a simula un calendar cu examenele studentilor de la CTI.
