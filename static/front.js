@@ -43,7 +43,7 @@ function processForm(event) {
 
 function getItems () {
 
-	let fullAPIPath = BaseAPIPath + ContactAPIPath + "?page=1&perPage=20";
+	let fullAPIPath = BaseAPIPath + ContactAPIPath;
 	let httpPromise = fetch(fullAPIPath, {
 		method: 'GET',
 		headers: {

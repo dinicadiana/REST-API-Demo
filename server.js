@@ -4,14 +4,13 @@ const bodyParser = require("body-parser");
 const cors = require('cors');
 const jsonDBName = "db.json";
 const path = require("path");
-const app = express();
+
+let app = express();
 app.use(cors())
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-//app.use('/', function(req, res) {
-//    res.send('todo api works');
-//});
+
 const server = http.createServer(app);
 const port = 3000;
 server.listen(port);
@@ -19,6 +18,8 @@ console.debug('Server listening on port ' + port);
 
 let documents = [];
 let id = 0;
+
+app.use(express.static("static"));
 
 app.get("/", function(request, response) {
     response.sendFile(path.join(__dirname + "/index.html"));
