@@ -56,7 +56,7 @@ app.get("/rest/contact/:id", async (req, res, next) => {
     } = req.params;
     try {
         // caut in lista obj cu id, undefine daca nu exista
-        myObj = documents.find(obj => obj.id == id);
+        myObj = documents[id-1];
         res.status(200).json(JSON.parse(JSON.stringify(myObj)));
     } catch (error) {
         next(error);

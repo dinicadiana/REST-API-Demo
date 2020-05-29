@@ -82,19 +82,7 @@ function selectRow(row) {
 
 		selectedRow = row.rowIndex;
 		itemsTable.rows[selectedRow].style.backgroundColor = "red";
-		
 	};
-}
-
-function populatePage(exam) {
-	console.log(exam);
-
-	document.getElementById("examId").innerHTML = exam.data.id;
-	document.getElementById("subject_edit").placeholder = exam.data.subject;
-	document.getElementById("comments_edit").placeholder = exam.data.comments;
-	document.getElementById("group_edit").placeholder = exam.data.group;
-	document.getElementById("date_edit").placeholder = exam.data.date;
-	document.getElementById("time_edit").placeholder = exam.data.time;
 }
 
 function addTableRow(exam, i) {
