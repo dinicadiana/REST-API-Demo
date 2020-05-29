@@ -97,8 +97,8 @@ app.put('/rest/contact/:id', async (req, res, next) => {
 
     try {
         // gasim indexul obiectului cu id-ul primit (din lista de documente)
-        const index = documents.findIndex(obj => obj.id == id);
-        documents[index] = { id, subject, group, date, time, comments };
+        const index = id - 1;
+        documents[index] = { subject, group, date, time, comments };
         res.status(200).send("Object was updated.");
     } catch (error) {
         next(error);

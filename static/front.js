@@ -159,23 +159,26 @@ function deleteItem() {
 	return false;
 }
 
-function updateExam(event) {
-	event.preventDefault();
-
+function updateExam() {
 	// in this object we keep the data that will be sent to backend
 	let data = {};
+	let itemsTable = document.getElementById("examList");
 
-	let examId = document.getElementById("examId").innerHTML;
 	// get values from formular
-	data['subject'] = document.getElementById("subject_edit").value;
-	data['group'] = document.getElementById("group_edit").value;
-	data['date'] = document.getElementById("date_edit").value;
-	data['time'] = document.getElementById("time_edit").value;
-	data['comments'] = document.getElementById("comments_edit").value;
+	data['subject'] = document.getElementById("subject").value;
+	data['group'] = document.getElementById("group").value;
+	data['date'] = document.getElementById("date").value;
+	data['time'] = document.getElementById("time").value;
+	data['comments'] = document.getElementById("comments").value;
 
 	console.log(JSON.stringify(data));
 
-	let fullAPIPath = BaseAPIPath + ContactAPIPath + "/" + examId.toString();
+	if (selectedRow === -1) {
+		alert("Pick a row first!");
+		return false;
+	}
+
+	let fullAPIPath = BaseAPIPath + ContactAPIPath + "/" + selectedRow.toString();
 	let httpPromise = fetch(fullAPIPath, {
 		method: 'PUT',
 		body: JSON.stringify(data),
@@ -192,6 +195,13 @@ function updateExam(event) {
   		if (response.ok) {
   			// the status code is 200
   			alert("Exam successfully modified!");
+  			itemsTable.rows[selectedRow].style.backgroundColor = "white";
+  			itemsTable.rows[selectedRow].cells[0].innerHTML = data.subject;
+  			itemsTable.rows[selectedRow].cells[1].innerHTML = data.group;
+  			itemsTable.rows[selectedRow].cells[2].innerHTML = data.date;
+  			itemsTable.rows[selectedRow].cells[3].innerHTML = data.time;
+  			itemsTable.rows[selectedRow].cells[4].innerHTML = data.comments;
+  			selectedRow = -1;
   		} else {
   			alert("Error: couldn't modify exam.");
 		}
