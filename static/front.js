@@ -34,6 +34,8 @@ function processForm(event) {
   		if (response.ok) {
   			// the status code is 200
   			alert("Exam successfully added!");
+  			addTableRow(data, 0);
+
   		} else {
   			alert("Error: couldn't add exam.");
 		}
@@ -110,26 +112,30 @@ function populatePage(exam) {
 	document.getElementById("time_edit").placeholder = exam.data.time;
 }
 
+function addTableRow(exam, i) {
+	let itemsTable = document.getElementById("examList");
+	
+	let newRow = itemsTable.insertRow(i+1);
+	newRow.onclick = selectRow(newRow);
+	let item1 = newRow.insertCell(0);
+	let item2 = newRow.insertCell(1);
+	let item3 = newRow.insertCell(2);
+	let item4 = newRow.insertCell(3);
+	let item5 = newRow.insertCell(4);
+
+	item1.innerHTML = exam.subject;
+	item2.innerHTML = exam.group;
+	item3.innerHTML = exam.date;
+	item4.innerHTML = exam.time;
+	item5.innerHTML = exam.comments;
+}
+
 function populateTable(exams) {
 	console.log(exams);
 
-	let itemsTable = document.getElementById("examList");
-
 	for (let i=0; i < exams.length; i++) {
 		
-		let newRow = itemsTable.insertRow(i+1);
-		newRow.onclick = selectRow(newRow);
-		let item1 = newRow.insertCell(0);
-		let item2 = newRow.insertCell(1);
-		let item3 = newRow.insertCell(2);
-		let item4 = newRow.insertCell(3);
-		let item5 = newRow.insertCell(4);
-
-		item1.innerHTML = exams[i].subject;
-		item2.innerHTML = exams[i].group;
-		item3.innerHTML = exams[i].date;
-		item4.innerHTML = exams[i].time;
-		item5.innerHTML = exams[i].comments;
+		addTableRow(exams[i], i);
 	}
 }
 
