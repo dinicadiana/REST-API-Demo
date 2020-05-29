@@ -1,6 +1,8 @@
 const BaseAPIPath = 'http://localhost:3000/rest';
 const ContactAPIPath = "/contact";
 
+let selectedRow = -1;
+
 function processForm(event) {
 
 	event.preventDefault();
@@ -73,31 +75,14 @@ function getItems () {
 
 function selectRow(row) {
 	return function() {
+		let itemsTable = document.getElementById("examList");
+		if (!(selectedRow === -1)) {
+			itemsTable.rows[selectedRow].style.backgroundColor = "white";
+		}
 
-		let fullAPIPath = BaseAPIPath + ContactAPIPath + "/" + (row.rowIndex).toString();
-		let httpPromise = fetch(fullAPIPath, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				'Accept': 'application/json'
-			}
-		});
-
-		httpPromise.then(function(response) {
-			// log the response from backend for debugging
-			console.log(response);
-
-			// handle the response from backend
-			response.json().then(data => { populatePage(data); });
-			if (response.ok) {
-				// the status code is 200
-				alert("Exam selected!");
-			} else {
-				alert("Error: couldn't select exam.");
-			}
-		});
-
-		return false;
+		selectedRow = row.rowIndex;
+		itemsTable.rows[selectedRow].style.backgroundColor = "red";
+		
 	};
 }
 
@@ -116,6 +101,7 @@ function addTableRow(exam, i) {
 	let itemsTable = document.getElementById("examList");
 	
 	let newRow = itemsTable.insertRow(i+1);
+	newRow.style.backgroundColor = "white";
 	newRow.onclick = selectRow(newRow);
 	let item1 = newRow.insertCell(0);
 	let item2 = newRow.insertCell(1);
@@ -142,6 +128,7 @@ function populateTable(exams) {
 function deleteItem() {
 	let examId = document.getElementById("examId").innerHTML;
 	let fullAPIPath = BaseAPIPath + ContactAPIPath + examId.toString();
+	let itemsTable = document.getElementById("examList");
 	let httpPromise = fetch(fullAPIPath, {
 		method: 'DELETE'
 	});
@@ -154,7 +141,10 @@ function deleteItem() {
 		response.json().then(data => { populateTable(data); });
 		if (response.ok) {
   			// the status code is 200
-  			alert("Exams successfully read!");
+  			alert("Exams successfully deleted!");
+  			if (!(selectedRow === -1)) {
+  				itemsTable.deleteRow(selectedRow);
+  			}
   		} else {
   			alert("Error: couldn't get exams.");
   		}
