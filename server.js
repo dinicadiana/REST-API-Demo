@@ -17,7 +17,6 @@ server.listen(port);
 console.debug('Server listening on port ' + port);
 
 let documents = [];
-let id = 0;
 
 app.use(express.static("static"));
 
@@ -34,8 +33,7 @@ app.post('/rest/contact', async (req, res, next) => {
         comments
     } = req.body
     try {
-        documents.push({ id, subject, group, date, time, comments });
-        id++;
+        documents.unshift({ subject, group, date, time, comments });
         res.status(201).send("Object was saved.");
     } catch (error) {
         next(error);
@@ -71,9 +69,14 @@ app.delete("/rest/contact/:id", async (req, res, next) => {
         id
     } = req.params;
     try {
-        const removeIndex = documents.findIndex(obj => obj.id == id);
-        documents.splice(removeIndex, 1);
-        res.status(200).send("Object was deleted.");
+        const removeIndex = id-1;
+        if (removeIndex < documents.length) {
+            documents.splice(removeIndex, 1);
+            res.status(200).send("Object was deleted.");
+        }
+        else {
+            res.status(202).send("Table duplicate. Find the element in the first rows.");
+        }
     } catch (error) {
         next(error);
     }

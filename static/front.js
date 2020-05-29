@@ -126,24 +126,30 @@ function populateTable(exams) {
 }
 
 function deleteItem() {
-	let examId = document.getElementById("examId").innerHTML;
-	let fullAPIPath = BaseAPIPath + ContactAPIPath + examId.toString();
+	let fullAPIPath = BaseAPIPath + ContactAPIPath + "/" + selectedRow.toString();
 	let itemsTable = document.getElementById("examList");
+	
+	if (selectedRow === -1) {
+		alert("Pick a row first!");
+		return false;
+	}
+
 	let httpPromise = fetch(fullAPIPath, {
 		method: 'DELETE'
 	});
 
+	
 	httpPromise.then(function(response) {
 		// log the response from backend for debugging
 		console.log(response);
 
 		// handle the response from backend
-		response.json().then(data => { populateTable(data); });
 		if (response.ok) {
   			// the status code is 200
   			alert("Exams successfully deleted!");
   			if (!(selectedRow === -1)) {
   				itemsTable.deleteRow(selectedRow);
+  				selectedRow = -1;
   			}
   		} else {
   			alert("Error: couldn't get exams.");
