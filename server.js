@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const jsonDBName = "db.json";
+const path = require("path");
 const app = express();
 app.use(cors())
 app.use(express.json());
@@ -18,6 +19,10 @@ console.debug('Server listening on port ' + port);
 
 let documents = [];
 let id = 0;
+
+app.get("/", function(request, response) {
+    response.sendFile(path.join(__dirname + "/index.html"));
+});
 
 app.post('/rest/contact', async (req, res, next) => {
     const {
